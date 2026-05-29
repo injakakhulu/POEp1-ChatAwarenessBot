@@ -1,22 +1,28 @@
-﻿using POEp1.Models;
-using POEp1.Services;
-using POEp1.UI;
+﻿using POEp1.Forms;
 using System;
+using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
+using System;
+using System.Windows.Forms;
+using POEp1.Forms;
 
+using System;
+using System.Windows.Forms;
+using POEp1.Forms;
 
-class Program
+namespace POEp1
 {
-    static void Main(string[] args)
+    internal static class Program
     {
-        ConsoleUI.DisplayHeader();
+        [STAThread]
+        static void Main()
+        {
+            // Force the WinForms Application explicitly
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
-        AudioPlayer.PlayGreeting();
-
-        string name = ConsoleUI.GetUserName();
-
-        UserProfile user = new UserProfile(name);
-
-        ChatbotService chatbot = new ChatbotService(user);
-        chatbot.StartChat();
+            // Fully qualify the form
+            System.Windows.Forms.Application.Run(new POEp1.Forms.MainForm());
+        }
     }
 }

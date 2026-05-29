@@ -1,24 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
 
-  <ItemGroup>
-    <Folder Include="Assets\" />
-  </ItemGroup>
+		<!-- Change this if you're using a different version -->
+		<TargetFramework>net8.0-windows</TargetFramework>
 
-  <ItemGroup>
-    <PackageReference Include="System.Windows.Extensions" Version="10.0.5" />
-  </ItemGroup>
+		<!-- THIS is what enables Windows Forms -->
+		<UseWindowsForms>true</UseWindowsForms>
 
-  <ItemGroup>
-    <None Update="Assets\greeting.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+		<!-- Optional but helpful -->
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Update="Assets\greetings.wav">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 
 </Project>

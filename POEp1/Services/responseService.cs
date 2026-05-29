@@ -8,6 +8,7 @@ namespace POEp1.Services
 {
     public static class ResponseService
     {
+
         public static string GetResponse(string input)
         {
             input = input.ToLower();
@@ -15,7 +16,7 @@ namespace POEp1.Services
             return input switch
             {
                 string s when s.Contains("how are you") =>
-                    "I'm operating at full capacity, never been better",
+                    "I'm operating at full capacity, never been better thank you for asking " ,
 
                 string s when s.Contains("purpose") =>
                     "My purpose is to educate you about cybersecurity.",
