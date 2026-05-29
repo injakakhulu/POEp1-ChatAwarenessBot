@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+
+		<!-- Change this if you're using a different version -->
+		<TargetFramework>net8.0-windows</TargetFramework>
+
+		<!-- THIS is what enables Windows Forms -->
+		<UseWindowsForms>true</UseWindowsForms>
+
+		<!-- Optional but helpful -->
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Update="Assets\greetings.wav">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>
