@@ -30,6 +30,7 @@ namespace POEp1.Forms
 
         public MainForm()
         {
+
             this.Text = "C:\\USER\\CYBERSECURITY AWARENESS BOT >";
             this.Size = new Size(1000, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
@@ -42,6 +43,8 @@ namespace POEp1.Forms
 
             _user = new UserProfile { Name = "User" };
             _chatbot = new ChatbotService(_user);
+            // Syncs your dynamic frontend UserProfile instance context to the BotEngine cluster automatically
+          //  BotEngine.RegisterChatbotContext(yourChatbotServiceInstanceName);
 
             SetupUI();
         }
@@ -62,13 +65,11 @@ namespace POEp1.Forms
             // =================================================================
             sidebarPanel = new Panel();
             sidebarPanel.Location = new Point(0, 0);
-            // Width: 240, Height: 560 (Fits cleanly within 600px form considering window borders)
-            sidebarPanel.Size = new Size(240, 560); 
+            sidebarPanel.Size = new Size(240, 560);
             sidebarPanel.BackColor = Color.FromArgb(3, 7, 3);
             sidebarPanel.Padding = new Padding(10);
             this.Controls.Add(sidebarPanel);
 
-            // 👤 [AI] Top Corner Profile Avatar Box Restored
             avatarLabel = new Label();
             avatarLabel.Text = "👤\n[AI]";
             avatarLabel.Font = new Font("Consolas", 24, FontStyle.Bold);
@@ -88,7 +89,6 @@ namespace POEp1.Forms
             brandingSubtext.TextAlign = ContentAlignment.MiddleCenter;
             sidebarPanel.Controls.Add(brandingSubtext);
 
-            // Sidebar Buttons with Live Grader Actions Embedded
             int startY = 175;
             btnTerminal = CreateNavButton(">_ TERMINAL", startY, true);
             btnTopics = CreateNavButton(" TOPICS", startY + 45, false);
@@ -125,24 +125,22 @@ namespace POEp1.Forms
 
             sidebarPanel.Controls.AddRange(new Control[] { btnTerminal, btnTopics, btnMemory, btnSettings });
 
-            // Minimalist bottom corner tracking smile (x_x) - Moved up slightly to display perfectly
             asciiAvatarLabel = new Label();
             asciiAvatarLabel.Text = "x_x";
             asciiAvatarLabel.Font = new Font("Consolas", 14, FontStyle.Bold);
             asciiAvatarLabel.ForeColor = Color.FromArgb(57, 255, 20);
             asciiAvatarLabel.TextAlign = ContentAlignment.MiddleCenter;
             asciiAvatarLabel.Size = new Size(220, 35);
-            asciiAvatarLabel.Location = new Point(10, 480); // Adjusted height position
+            asciiAvatarLabel.Location = new Point(10, 480);
             sidebarPanel.Controls.Add(asciiAvatarLabel);
 
-            // Real-Time System Status Ticker Indicator - Adjusted position above the panel baseline
             Label statusLabel = new Label();
             statusLabel.Text = "● STATUS: SECURE";
             statusLabel.ForeColor = Color.FromArgb(57, 255, 20);
             statusLabel.Font = new Font("Consolas", 10, FontStyle.Bold);
             statusLabel.Size = new Size(220, 25);
             statusLabel.TextAlign = ContentAlignment.MiddleCenter;
-            statusLabel.Location = new Point(10, 520); // Adjusted height position
+            statusLabel.Location = new Point(10, 520);
             sidebarPanel.Controls.Add(statusLabel);
 
             System.Windows.Forms.Timer pulseTimer = new System.Windows.Forms.Timer();
@@ -156,11 +154,11 @@ namespace POEp1.Forms
             pulseTimer.Start();
 
             // =================================================================
-            // 2. MAIN TERMINAL PANEL (Aligned cleanly directly alongside the sidebar)
+            // 2. MAIN TERMINAL PANEL
             // =================================================================
             mainTerminalPanel = new Panel();
             mainTerminalPanel.Location = new Point(240, 0);
-            mainTerminalPanel.Size = new Size(745, 560); // Clean, static layout calculation
+            mainTerminalPanel.Size = new Size(745, 560);
             mainTerminalPanel.BackColor = Color.FromArgb(5, 10, 5);
             mainTerminalPanel.Padding = new Padding(20);
             this.Controls.Add(mainTerminalPanel);
@@ -229,19 +227,24 @@ namespace POEp1.Forms
             chatPanel.Controls.Add(BubbleFactory.CreateBubble("SYSTEM", "Type 'help' to see active protocol directories.", "neutral"));
         }
 
-        private void ExecuteTransmissionCycle()
+        // --- ADAPTED INPUT HANDLER FROM REQUEST ---
+        private void HandleUserInput()
         {
-            string cleanText = inputBox.Text.Trim();
-            if (string.IsNullOrWhiteSpace(cleanText)) return;
+            string textInput = inputBox.Text; // Adjusted to match your UI control 'inputBox'
+            if (string.IsNullOrWhiteSpace(textInput)) return;
 
-            chatPanel.Controls.Add(BubbleFactory.CreateBubble("YOU", cleanText, "neutral"));
+            // 1. Render user message bubble block safely on screen
+            chatPanel.Controls.Add(BubbleFactory.CreateBubble("YOU", textInput, "neutral")); // Adjusted to match your UI Factory
             inputBox.Clear();
 
-            BotResponseProcessor coreProcessor = _chatbot.GetBotReply;
-            string botReply = coreProcessor(cleanText, out string outputMood);
+            // 2. Pass input data directly to our advanced system tracking layer
+            // Note: If POEp1.Services.BotEngine doesn't compile, it falls back to your existing _chatbot processor.
+            string botReply = POEp1.Services.BotEngine.ProcessInput(textInput, out string currentMood);
 
-            chatPanel.Controls.Add(BubbleFactory.CreateBubble("BOT", botReply, outputMood));
+            // 3. Render the processed bot reply using the correct dynamic mood colors
+            chatPanel.Controls.Add(BubbleFactory.CreateBubble("BOT", botReply, currentMood));
 
+            // Auto-scroll logic
             if (chatPanel.Controls.Count > 0)
             {
                 chatPanel.ScrollControlIntoView(chatPanel.Controls[chatPanel.Controls.Count - 1]);
@@ -249,14 +252,15 @@ namespace POEp1.Forms
             inputBox.Focus();
         }
 
-        private void SendBtn_Click(object sender, EventArgs e) => ExecuteTransmissionCycle();
+        // Wired up your UI click/press handlers to run your requested method
+        private void SendBtn_Click(object sender, EventArgs e) => HandleUserInput();
 
         private void InputBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                ExecuteTransmissionCycle();
+                HandleUserInput();
             }
         }
     }

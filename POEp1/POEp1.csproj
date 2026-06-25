@@ -15,6 +15,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="MySql.Data" Version="9.7.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Update="Assets\greetings.wav">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
