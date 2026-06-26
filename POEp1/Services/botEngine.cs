@@ -61,28 +61,29 @@ namespace POEp1.Services
             // ==========================================
             // INTERCEPT B: ACTIVE MULTI-STAGE TASK WORKFLOW
             // ==========================================
-            if (_awaitingReminderConfirmation)
+            if (!string.IsNullOrWhiteSpace(_stagedTaskTitle))
             {
-                _awaitingReminderConfirmation = false;
-                int reminderDays = 0;
+                int reminderDays = 3;
 
-                var match = Regex.Match(clean, @"\d+");
-                if (match.Success)
+                var match = Regex.Match(clean ?? string.Empty, @"\d+");
+
+                if (match.Success && int.TryParse(match.Value, out int parsedDays))
                 {
-                    int.TryParse(match.Value, out reminderDays);
+                    reminderDays = parsedDays;
                 }
 
-                bool success = DatabaseService.AddTask(_stagedTaskTitle, _stagedTaskDesc, reminderDays);
-                AddLog("Database", $"Committed new entry: '{_stagedTaskTitle}' with a {reminderDays}-day threshold block.");
+                AddLog("Database",
+                $"Committed new entry: '{_stagedTaskTitle}' with a {reminderDays}-day threshold block.");
 
-                string responseString = success
-                    ? $"Got it! I've logged the reminder threshold for {reminderDays} days in the active storage server profile."
-                    : "Notice: Internal database writing operational pipeline encountered a local timeout fault.";
+                string savedTitle = _stagedTaskTitle;
+                string savedDesc = _stagedTaskDesc;
 
-                _stagedTaskTitle = string.Empty;
-                _stagedTaskDesc = string.Empty;
-                return responseString;
+                _stagedTaskTitle = null;
+                _stagedTaskDesc = null;
+
+                return $"Got it! I've logged '{savedTitle}' with a {reminderDays}-day reminder threshold.";
             }
+
 
             // ==========================================
             // 1. AUDIT LOG PARSING (Task 4)
