@@ -211,10 +211,10 @@ namespace POEp1.Services
             // If it hits a total dead end across Part 1, Part 2, and Part 3 pipelines, render custom unified fallback help tips
             mood = "error_fallback";
             return "I didn't quite catch those configuration parameters.\n\n" +
-                   "👉 *To use Part 3 Task Manager*: Type 'Add task to check my privacy' or 'remind me to update my password'\n" +
-                   "👉 *To play the Game*: Type 'start quiz'\n" +
-                   "👉 *To view database tracking*: Type 'show activity log' or 'summary'\n" +
-                   "👉 *For security domains*: Ask regarding 'passwords', 'scams', or 'privacy' to parse emotional metrics!";
+                   "*To use Part 3 Task Manager*: Type 'Add task to check my privacy' or 'remind me to update my password'\n" +
+                   "*To play the Game*: Type 'start quiz'\n" +
+                   "*To view database tracking*: Type 'show activity log' or 'summary'\n" +
+                   "*For security domains*: Ask regarding 'passwords', 'scams', or 'privacy' to parse emotional metrics!";
         }
     }
 }
